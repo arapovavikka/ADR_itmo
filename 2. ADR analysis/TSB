@@ -1,0 +1,42 @@
+import nltk
+#nltk.download()
+import pymorphy2
+
+from nltk.corpus import stopwords
+#print(stopwords.words("russian"))
+
+from nltk.tokenize import word_tokenize 
+
+#tsb.py = tokens, stopwords and biargrams
+
+sampleText = "врач при депрессивном эпизоде предложил Иксел / Вальдоксан что лучше из этого? (главное чтоб я себя овощем не чувствовал сонным целый день и не набрал дохуя килограмм) Вальдоксан вредное для печени полуплацебо. Если выбирать меж двух стульев, то конечно иксел. Он стимит. Но если есть тревога - то вопрос. Посоны и посонессы, кто пил сертралин в связке с литием? (+ гидроксизин от тревоги) Очень беспокоит этот литий, прочитала про побочки и нихуёво так зассала пить его. Я пил и пью литий 6 лет уже, все заебись, анализы хорошие. 7 лет пью литий, в больших дозировках, не умер, почки как новые. Хорошая штука этот литий сам пью. Стоит ли брать рокону как аналог феварина? хз но мой врач предпочел больше феварин чем рокону пила сначала феварин, потом ушла на рокону, ибо дешевле в 2 раза, разницы абсолютно не почувствовала депрессивный эпизод, феварин + пантогам нормальная связка или не? у меня был повышен, особо не набрал, тк принимал 2 месяца всего, но жрал много, несмотря на то что до приема не ел по 2-3 и более дней, ещё и тошнило потом постоянно из-за такой встряски жкт, видимо принимал феварин"
+print("Исходные текстовые данные: " + sampleText)
+
+word_tokens = set(word_tokenize(sampleText)) 
+
+print("Токенизация исходных текстовых данных: " + str(len(word_tokens)))
+print(word_tokens)
+
+rus_stop_words = stopwords.words("russian")
+
+for x in rus_stop_words: 
+	if x in word_tokens: 
+		word_tokens.remove(x)
+
+print("Токены,  очищеные от стоп-слов: " + str(len(word_tokens)))
+print(word_tokens)
+
+#для выделения словосочетаний
+from nltk.collocations import BigramCollocationFinder 
+from nltk.metrics import BigramAssocMeasures 
+
+biagram_collocation = BigramCollocationFinder.from_words(word_tokens) 
+cool = biagram_collocation.nbest(BigramAssocMeasures.likelihood_ratio, 100)
+
+print(cool)
+
+#блок работы с pymorphy
+morph = pymorphy2.MorphAnalyzer()
+for x in word_tokens:
+	print (str(morph.parse(x)[0].normal_form) + " " + str(morph.parse(x)[0].tag))
+
