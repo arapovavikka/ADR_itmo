@@ -12,7 +12,7 @@ owner_id = "-179715168"
 
 # стандартные данные для запроса 
 # тут твой токен, который запрашивается вот так https://vk.com/dev/auth_sites
-access_token ="243c610707adbf7330331c61dcb007dbb96c8ff0c3f8c26606963feb149d239905b26259d54adc08e333d"
+access_token ="337c5dc6d446ee83b47011184d3783d4fd6b9ee931a06144a3d57949de88d830a9b0e17871b1efb735601"
 v = "5.102"
 
 total_posts = 0
